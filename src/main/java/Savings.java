@@ -8,7 +8,8 @@ import java.time.format.DateTimeFormatter;
 public class Savings extends BankAccounts{
 	
 
-	static ArrayList <Integer> record = new ArrayList();
+	static ArrayList <Integer> record1= new ArrayList();
+	static ArrayList<BankAccounts> record= new ArrayList();
 	
 	
 	public Savings(String fn,String ln,String address,int accno,int balance,String phoneno,int type)
@@ -17,27 +18,25 @@ public class Savings extends BankAccounts{
 	super(fn,ln,address,accno,balance,phoneno,type);
 	}
 	
-	public int makeDeposit()
+	public int makeDeposit(int cash)
 	{
 	   Scanner deposit=new Scanner(System.in);
-	   System.out.println("Enter Amount to Deposit");
-	   int cash= deposit.nextInt();
+	   
 	   balance=(getBalance()+cash);
 	   setBalance(balance);
-	   record.add(balance);
+	   record1.add(balance);
 	   System.out.println("Balance: "+getBalance());
 	   return getBalance();
 	   
 	}
 	
-	public int makeWithdrawl()
+	
+	public int makeWithdrawl(int withcash)
 	{
 		Scanner withdrawl= new Scanner(System.in);
-		System.out.println("Enter Amount to Withdrawl");
-		int withcash=withdrawl.nextInt();
 		balance=(balance-withcash);
 		setBalance(balance);
-		record.add(balance);
+		record1.add(balance);
 		System.out.println("Balance: "+getBalance());
 		return getBalance();
 	}
@@ -68,9 +67,9 @@ public class Savings extends BankAccounts{
 			System.out.println("--------------------");
 	}
 
-	int zakat;
 	
-	public void calculateZakat()
+	
+	public int calculateZakat(int zakat)
 	{
 		zakat=(int)(balance*0.25);
 		if(getBalance()>=20000)
@@ -86,21 +85,66 @@ public class Savings extends BankAccounts{
 		{
 			System.out.println("Insufficent Balance for Zakat");
 		}
+		return getBalance();
 	}
 	
-	public void calculateInterest()
+	public int calculateInterest(int interest)
 	{
+		interest=60;
 		if(getBalance()>=5000)
 		{
-			Random rand= new Random();
-			int upperlimit=3000;
-			int interest=rand.nextInt(upperlimit);
+		//	Random rand= new Random();
+			//int upperlimit=3000;
+			
 			int interestrate=(int)((interest*5.50)/2);
 			int balance=getBalance()+interestrate;
 			setBalance(balance);
 			System.out.println("Current Interest Rate: "+interestrate);
 			System.out.println("Balance after interest rate: "+balance);
+			
 		}
+		return balance;
+	}
+	
+	public void TransferAmount()
+	{
+		int transamount;
+		Scanner input1= new Scanner(System.in);
+		System.out.println("Enter your Account Number: ");
+		int acc1=input1.nextInt();
+		System.out.println("Enter Account Number in which amount has to be transferred: ");
+		int acc2=input1.nextInt();
+	
+		System.out.println("Enter Amount to Transfer: ");
+		transamount=input1.nextInt();
+		
+		for(int j=0;j<record.size();j++)
+		{
+			if(record.get(j).getAccNo()==acc1)
+			{
+				int bal=record.get(j).getBalance()-transamount;
+				record.get(j).setBalance(bal);
+			}
+		}
+		
+		for(int k=0;k<record.size();k++)
+		{
+			if(record.get(k).getAccNo()==acc2)
+			{
+				int balance1=record.get(k).getBalance()+transamount;
+				record.get(k).setBalance(balance1);
+			}
+		}
+		System.out.println("Amount Has Been Trasnferred Successfully!");
+	}
+	
+	public int generateRandNo()
+	{
+		Random rand=new Random();
+		int upperbound=1000;
+		int accno=rand.nextInt(upperbound);
+	//	System.out.println("record Number: "+accno);
+		return accno;
 	}
 	
 }

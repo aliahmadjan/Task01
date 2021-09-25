@@ -30,6 +30,7 @@ public class Main {
 		Checking check;
 		Savings save;
 		
+		
 		switch(key)
 		{
 		case 1:
@@ -46,6 +47,7 @@ public class Main {
 			Random rand=new Random();
 			int upperbound=1000;
 			int accno=rand.nextInt(upperbound);
+			//int accno=BA.generateRandNo();
 			System.out.println("Enter Balance: ");
 			int bal=scan.nextInt();
 			System.out.println("Select Type of your Account: "+"\n");
@@ -116,12 +118,12 @@ public class Main {
 				switch(option)
 				{
 				case 1:
-					check.makeDeposit();
+			//		check.makeDeposit();
 					account.set(i, check);
 					break;
 					
 				case 2:
-					check.makeWithdrawl();
+				//	check.makeWithdrawl();
 					account.set(i, check);
 					break;
 					
@@ -134,39 +136,11 @@ public class Main {
 					break;
 					
 				case 5:
-					int transamount;
-					Scanner input1= new Scanner(System.in);
-					System.out.println("Enter your Account Number: ");
-					int acc1=input1.nextInt();
-					System.out.println("Enter Account Number in which amount has to be transferred: ");
-					int acc2=input1.nextInt();
 				
-					System.out.println("Enter Amount to Transfer: ");
-					transamount=input1.nextInt();
-					
-					for(int j=0;j<account.size();j++)
-					{
-						if(account.get(j).getAccNo()==acc1)
-						{
-							bal=account.get(j).getBalance()-transamount;
-							account.get(j).setBalance(bal);
-						}
-					}
-					
-					for(int k=0;k<account.size();k++)
-					{
-						if(account.get(k).getAccNo()==acc2)
-						{
-							int balance=account.get(k).getBalance()+transamount;
-							account.get(k).setBalance(balance);
-						}
-					}
-						
-				}
-								
-					System.out.println("Amount Has Been Trasnferred Successfully!");
+				 check.TransferAmount();
 					break;
 			}
+					}
 					
 					else if(account.get(i).getType()==2)
 					{
@@ -188,12 +162,12 @@ public class Main {
 						switch(option1)
 						{
 						case 1:
-							save.makeDeposit();
+						//	save.makeDeposit();
 							account.set(i, save);
 							break;
 							
 						case 2:
-							save.makeWithdrawl();
+						//	save.makeWithdrawl();
 							account.set(i, save);
 							break;
 							
@@ -206,44 +180,17 @@ public class Main {
 							break;
 						
 						case 5:	
-							int transamount;
-							Scanner input1= new Scanner(System.in);
-							System.out.println("Enter your Account Number: ");
-							int acc1=input1.nextInt();
-							System.out.println("Enter Account Number in which amount has to be transferred: ");
-							int acc2=input1.nextInt();
-						
-							System.out.println("Enter Amount to Transfer: ");
-							transamount=input1.nextInt();
-							
-							for(int j=0;j<account.size();j++)
-							{
-								if(account.get(j).getAccNo()==acc1)
-								{
-									bal=account.get(j).getBalance()-transamount;
-									account.get(j).setBalance(bal);
-								}
-							}
-							
-							for(int k=0;k<account.size();k++)
-							{
-								if(account.get(k).getAccNo()==acc2)
-								{
-									int balance1=account.get(k).getBalance()+transamount;
-									account.get(k).setBalance(balance1);
-								}
-							}
-							System.out.println("Amount Has Been Trasnferred Successfully!");
+							save.TransferAmount();
 							break;
 							
 						
 						case 6:
-							save.calculateZakat();
+						//	save.calculateZakat();
 							account.set(i, save);
 							break;
 							
 						case 7:
-							save.calculateInterest();
+						//	save.calculateInterest();
 							account.set(i,save);
 							break;
 						

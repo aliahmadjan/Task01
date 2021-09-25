@@ -1,11 +1,11 @@
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class Checking extends BankAccounts {
 
-	static ArrayList <Integer> record = new ArrayList();
+	static ArrayList <BankAccounts> record = new ArrayList();
+	static ArrayList<Integer> record1=new ArrayList();
+	
 	int Transfee=10;
 	
 	public Checking(String fn,String ln,String address,int accno,int balance,String phoneno,int type)
@@ -15,31 +15,31 @@ public class Checking extends BankAccounts {
 	}
 
 	static int count=0;
-	public int makeDeposit()
+	public int makeDeposit(int cash)
 	{
 	   Scanner deposit=new Scanner(System.in);
-	   System.out.println("Enter Amount to Deposit");
-	   int cash= deposit.nextInt();
+	  
 	   balance=(getBalance()+cash)-Transfee;
 	   setBalance(balance);
-	   record.add(balance);
+	   record1.add(balance);
 	   System.out.println("Balance: "+getBalance());
 	   count++;
 	   return getBalance();
 	   
 	}
 	
-	public int makeWithdrawl()
+	
+	public int makeWithdrawl(int withcash)
 	{
 		Scanner withdrawl= new Scanner(System.in);
-		System.out.println("Enter Amount to Withdraw");
-		int withcash=withdrawl.nextInt();
+		//System.out.println("Enter Amount to Withdraw");
+		//withcash=withdrawl.nextInt();
 		
-		if((getBalance()+5000)>=withcash)
+		if(withcash<=getBalance())
 		{
 			balance=(balance-withcash)-Transfee;
 			setBalance(balance);
-			record.add(balance);
+			record1.add(balance);
 			System.out.println("Balance: "+getBalance());
 			count++;
 			return getBalance();
@@ -69,7 +69,7 @@ public class Checking extends BankAccounts {
 	
 	public void AllDeductions()
 	{
-		System.out.println("Your Account History: ");
+		System.out.println("Your record History: ");
 		
 		for (int i=0;i<record.size();i++)
 		{
@@ -80,5 +80,53 @@ public class Checking extends BankAccounts {
 		System.out.println("Deduction made upon your transactions is 10Rs: "+(10*count));
 		System.out.println("--------------------");
 	}
+	
+	public void TransferAmount()
+	{
+		int transamount;
+		Scanner input1= new Scanner(System.in);
+		System.out.println("Enter your account Number: ");
+		int acc1=input1.nextInt();
+		System.out.println("Enter account Number in which amount has to be transferred: ");
+		int acc2=input1.nextInt();
+	
+		System.out.println("Enter Amount to Transfer: ");
+		transamount=input1.nextInt();
+		
+		for(int j=0;j<record.size();j++)
+		{
+			if(record.get(j).getAccNo()==acc1)
+			{
+				int bal=record.get(j).getBalance()-transamount;
+				record.get(j).setBalance(bal);
+			}
+		}
+		
+		for(int k=0;k<record.size();k++)
+		{
+			if(record.get(k).getAccNo()==acc2)
+			{
+				int balance=record.get(k).getBalance()+transamount;
+				record.get(k).setBalance(balance);
+			}
+		}
+		
+		//return true;
+		System.out.println("Amount Has Been Trasnferred Successfully!");
+			
+	}
+					
+		
+	
+	
+	public int generateRandNo()
+	{
+		Random rand=new Random();
+		int upperbound=1000;
+		int accno=rand.nextInt(upperbound);
+	//	System.out.println("record Number: "+accno);
+		return accno;
+	}
+
 }
 
